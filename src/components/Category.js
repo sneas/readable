@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 class Category extends Component {
   render() {
     return (
       <div>
-        Category selected: {this.props.match.params.category}
+        Category selected: {this.props.category}
         {
           this.props.categories.map(category => (
             <div key={category.path}>
               {
-                this.props.match.params.category === category.path
+                this.props.category === category.path
                   ? (<span>{category.name}</span>)
                   : (<Link to={`/category/${category.path}`}>{category.name}</Link>)
               }
@@ -23,10 +23,11 @@ class Category extends Component {
   }
 }
 
-function mapStateToProps({categories}) {
+function mapStateToProps({categories}, ownProps) {
   return {
-    categories
+    categories,
+    category: ownProps.match.params.category,
   }
 }
 
-export default connect(mapStateToProps)(Category);
+export default withRouter(connect(mapStateToProps)(Category));

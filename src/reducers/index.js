@@ -1,4 +1,5 @@
 import { SET_CATEGORIES } from "../actions/index";
+import combineReducers from "redux/es/combineReducers";
 
 export function categories (categories = [], action) {
   switch (action.type) {
@@ -8,3 +9,7 @@ export function categories (categories = [], action) {
       return categories;
   }
 }
+
+export default combineReducers({
+  categories
+});

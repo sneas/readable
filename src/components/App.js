@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, withRouter } from 'react-router-dom'
 import Category from './Category';
 import { connect } from "react-redux";
 import { fetchCategories } from "../utils/api";
@@ -31,4 +31,4 @@ class App extends Component {
   }
 }
 
-export default connect()(App)
+export default withRouter(connect()(App));
