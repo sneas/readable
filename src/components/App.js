@@ -4,6 +4,7 @@ import Category from './PostList';
 import { connect } from "react-redux";
 import { fetchCategories, fetchPosts } from "../utils/api";
 import { setCategories, setPosts } from "../actions/index";
+import PostForm from "./PostForm";
 
 class App extends Component {
   componentDidMount() {
@@ -18,19 +19,25 @@ class App extends Component {
 
   render() {
     return (
-        <div>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-                <div className="container">
-                    <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">Readable</Link>
-                    </div>
-                </div>
-            </nav>
-            <div className="container">
-              <Route exact path='/' component={Category} />
-              <Route exact path='/category/:category' component={Category} />
+      <div>
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+          <div className="container">
+            <div className="navbar-header">
+              <Link className="navbar-brand" to="/">Readable</Link>
             </div>
+            <div className="navbar-collapse collapse">
+              <ul className="nav navbar-nav">
+                <li><Link to={`/post/create`}>Write post</Link></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div className="container">
+          <Route exact path='/' component={Category} />
+          <Route exact path='/category/:category' component={Category} />
+          <Route exact path='/post/create' component={PostForm} />
         </div>
+      </div>
     );
   }
 }
