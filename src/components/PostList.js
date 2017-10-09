@@ -28,6 +28,7 @@ class PostList extends Component {
             <div key={post.id}>
               <p className="lead">{post.title}</p>
               <p>{post.body}</p>
+              <p><Link to={`/post/${post.id}`}>View</Link></p>
               <hr />
             </div>
           ))}

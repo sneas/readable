@@ -20,7 +20,6 @@ export const fetchPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-export const fetchPost = (postId) => {
+export const fetchPost = (postId) =>
   fetch(`${api}/posts/${postId}`, { headers })
     .then(res => res.json())
-}

@@ -9,8 +9,8 @@ class PostForm extends Component {
   }
 
   componentDidMount() {
-    if (this.props.postId) {
-      fetchPost(this.props.postId).then((post) => {
+    if (this.props.id) {
+      fetchPost(this.props.id).then((post) => {
         this.setState({
           post
         });
@@ -26,10 +26,10 @@ class PostForm extends Component {
   }
 }
 
-function mapStateToProps({categories, posts}, ownProps) {
+function mapStateToProps({categories}, ownProps) {
   return {
     categories,
-    postId: ownProps.match.params.postId,
+    id: ownProps.match.params.id,
   }
 }
 

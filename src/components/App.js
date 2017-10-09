@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { fetchCategories, fetchPosts } from "../utils/api";
 import { setCategories, setPosts } from "../actions/index";
 import PostForm from "./PostForm";
+import Post from "./Post";
 
 class App extends Component {
   componentDidMount() {
@@ -36,6 +37,8 @@ class App extends Component {
           <Route exact path='/' component={Category} />
           <Route exact path='/category/:category' component={Category} />
           <Route exact path='/post/create' component={PostForm} />
+          <Route exact path='/post/edit/:id' component={PostForm} />
+          <Route exact path='/post/:id' component={Post} />
         </div>
       </div>
     );
