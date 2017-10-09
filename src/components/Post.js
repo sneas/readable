@@ -24,7 +24,7 @@ class Post extends Component {
       <div>
         <h1>{post.title}</h1>
         <p>{post.body}</p>
-        <p><Link to={`/post/edit/${post.id}`}>Edit</Link></p>
+        <p><Link to={`/edit/post/${post.id}`}>Edit</Link></p>
       </div>
     );
   }

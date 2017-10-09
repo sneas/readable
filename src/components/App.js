@@ -28,7 +28,7 @@ class App extends Component {
             </div>
             <div className="navbar-collapse collapse">
               <ul className="nav navbar-nav">
-                <li><Link to={`/post/create`}>Write post</Link></li>
+                <li><Link to={`/add/post`}>Write post</Link></li>
               </ul>
             </div>
           </div>
@@ -36,8 +36,8 @@ class App extends Component {
         <div className="container">
           <Route exact path='/' component={Category} />
           <Route exact path='/category/:category' component={Category} />
-          <Route exact path='/post/create' component={PostForm} />
-          <Route exact path='/post/edit/:id' component={PostForm} />
+          <Route exact path='/add/post' component={PostForm} />
+          <Route exact path='/edit/post/:id' component={PostForm} />
           <Route exact path='/post/:id' component={Post} />
         </div>
       </div>

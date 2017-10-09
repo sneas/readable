@@ -5,7 +5,10 @@ import { withRouter } from 'react-router-dom'
 
 class PostForm extends Component {
   state = {
-    post: {}
+    post: {
+      title: '',
+      body: '',
+    }
   }
 
   componentDidMount() {
@@ -18,10 +21,49 @@ class PostForm extends Component {
     }
   }
 
+  handleChange(field, value) {
+    this.setState({
+      post: Object.assign({}, this.state.post, { [field]: value })
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
   render() {
-    console.log(this.state);
+    if (this.state.post === undefined) {
+      return (
+        <div>Loading...</div>
+      )
+    }
+
+    const post = this.state.post;
+
     return (
-      <div>Post form</div>
+      <form onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            className="form-control"
+            id="title"
+            placeholder="Post title"
+            value={post.title}
+            onChange={(event) => this.handleChange('title', event.target.value)} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="body">Body</label>
+          <textarea
+            className="form-control"
+            id="body"
+            placeholder="Post body"
+            value={post.body}
+            onChange={(event) => this.handleChange('body', event.target.value)}
+          />
+        </div>
+        <input type="submit" className="btn btn-primary" value="Submit" />
+      </form>
     );
   }
 }
