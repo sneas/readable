@@ -32,12 +32,6 @@ class PostForm extends Component {
   }
 
   render() {
-    if (this.state.post === undefined) {
-      return (
-        <div>Loading...</div>
-      )
-    }
-
     const post = this.state.post;
 
     return (
