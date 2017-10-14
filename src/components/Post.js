@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { fetchPost } from "../utils/api";
+import { api } from "../utils/api";
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
@@ -10,8 +10,7 @@ class Post extends Component {
   }
 
   componentDidMount() {
-    fetchPost(this.props.match.params.id).then((post) => {
-      console.log(post);
+    api.fetchPost(this.props.match.params.id).then((post) => {
       this.setState({
         post
       });

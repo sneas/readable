@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom'
 import Category from './PostList';
 import { connect } from "react-redux";
-import { fetchCategories, fetchPosts } from "../utils/api";
 import { setCategories, setPosts } from "../actions/index";
 import PostForm from "./PostForm";
 import Post from "./Post";
+import { api } from "../utils/api";
 
 class App extends Component {
   componentDidMount() {
-    fetchCategories().then(categories => {
+    api.fetchCategories().then(categories => {
       this.props.dispatch(setCategories(categories));
     });
 
-    fetchPosts().then(posts => {
+    api.fetchPosts().then(posts => {
       this.props.dispatch(setPosts(posts));
     });
   }

@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { fetchPost } from "../utils/api";
+import { api } from "../utils/api";
 import { withRouter } from 'react-router-dom'
+import * as uuid from "uuid";
+import { updatePost, addPost } from "../actions/index";
 
 class PostForm extends Component {
   state = {
+    updated: false,
     post: {
       title: '',
       body: '',
+      category: '',
     }
   }
 
   componentDidMount() {
     if (this.props.id) {
-      fetchPost(this.props.id).then((post) => {
+      api.fetchPost(this.props.id).then((post) => {
         this.setState({
           post
         });
@@ -29,13 +33,64 @@ class PostForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    if (this.state.post.id) {
+     this.updatePost();
+    } else {
+      this.createPost();
+    }
+  }
+
+  updatePost() {
+    api.updatePost(this.state.post).then(post => {
+      this.props.dispatch(updatePost(post));
+      this.setState({
+        updated: true
+      })
+    });
+  }
+
+  createPost() {
+    const post = {
+      ...this.state.post,
+      author: 'Dima',
+      id: uuid(),
+      timestamp: Date.now(),
+    };
+
+    api.createPost(post).then(post => {
+      this.props.dispatch(addPost(post));
+      this.props.history.push(`/post/${post.id}`);
+    });
   }
 
   render() {
     const post = this.state.post;
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={(event) => this.handleSubmit(event)}>
+        {
+          this.state.updated ? (
+            <div className="alert alert-success">
+              <strong>Success!</strong> The post has been successfully updated
+            </div>
+          ) : ''
+        }
+        <h1>{this.state.post.id ? 'Edit post' : 'Write post'}</h1>
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <select
+            className="form-control"
+            id="category"
+            value={post.category}
+            required
+            onChange={(event) => this.handleChange('category', event.target.value)}>
+            <option value="">- select -</option>
+            {this.props.categories.map(category => (
+              <option key={category.path} value={category.path}>{category.name}</option>
+            ))}
+          </select>
+        </div>
         <div className="form-group">
           <label htmlFor="title">Title</label>
           <input
@@ -44,6 +99,7 @@ class PostForm extends Component {
             id="title"
             placeholder="Post title"
             value={post.title}
+            required
             onChange={(event) => this.handleChange('title', event.target.value)} />
         </div>
         <div className="form-group">
@@ -53,6 +109,7 @@ class PostForm extends Component {
             id="body"
             placeholder="Post body"
             value={post.body}
+            required
             onChange={(event) => this.handleChange('body', event.target.value)}
           />
         </div>
