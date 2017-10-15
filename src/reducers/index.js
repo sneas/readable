@@ -1,4 +1,4 @@
-import { SET_CATEGORIES, SET_POSTS, ADD_POST, UPDATE_POST } from "../actions/index";
+import { SET_CATEGORIES, SET_POSTS, ADD_POST, UPDATE_POST, DELETE_POST } from "../actions/index";
 import combineReducers from "redux/es/combineReducers";
 
 export function categories (categories = [], action) {
@@ -21,6 +21,8 @@ export function posts (posts = [], action) {
       ];
     case UPDATE_POST:
       return posts.map(post => post.id === action.post.id ? action.post : post);
+    case DELETE_POST:
+      return posts.filter(post => post.id !== action.post.id);
     default:
       return posts;
   }

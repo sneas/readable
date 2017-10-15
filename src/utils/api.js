@@ -11,38 +11,45 @@ const headers = {
 }
 
 export const api = {
-    fetchCategories: () =>
-      fetch(`${endpoint}/categories`, { headers })
-        .then(res => res.json())
-        .then(data => data.categories),
+  fetchCategories: () =>
+    fetch(`${endpoint}/categories`, { headers })
+      .then(res => res.json())
+      .then(data => data.categories),
 
-    fetchPosts: () =>
-      fetch(`${endpoint}/posts`, { headers })
-        .then(res => res.json()),
+  fetchPosts: () =>
+    fetch(`${endpoint}/posts`, { headers })
+      .then(res => res.json()),
 
-    fetchPost: (postId) =>
-      fetch(`${endpoint}/posts/${postId}`, { headers })
-        .then(res => res.json()),
+  fetchPost: (postId) =>
+    fetch(`${endpoint}/posts/${postId}`, { headers })
+      .then(res => res.json()),
 
-    createPost: (post) =>
-      fetch(`${endpoint}/posts`,
-        {
-          method: 'POST',
-          headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post)
-        }).then(res => res.json()),
+  createPost: (post) =>
+    fetch(`${endpoint}/posts`,
+      {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post)
+      }).then(res => res.json()),
 
-    updatePost: (post) =>
-      fetch(`${endpoint}/posts/${post.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post)
-        }).then(res => res.json()),
+  updatePost: (post) =>
+    fetch(`${endpoint}/posts/${post.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post)
+      }).then(res => res.json()),
+
+  deletePost: (postId) =>
+    fetch(`${endpoint}/posts/${postId}`,
+      {
+        method: 'DELETE',
+        headers,
+      }).then(res => res.json()),
 }
