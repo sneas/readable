@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link, withRouter } from 'react-router-dom'
+import ListSort from './ListSort';
 
 class PostList extends Component {
   render() {
-    const posts = this.props.category
+    const orderField = this.props.orderField
+    const posts = (this.props.category
       ? this.props.posts.filter(post => post.category === this.props.category)
-      : this.props.posts;
+      : this.props.posts).sort((a, b) => b[orderField] - a[orderField]);
 
     return (
       <div>
@@ -24,14 +26,15 @@ class PostList extends Component {
           }
         </div>
         <div className="col-xs-9">
+          <ListSort />
           {posts.map(post => (
             <div key={post.id}>
-              <h1>{post.title}</h1>
+              <h1><Link to={`/post/${post.id}`}>{post.title}</Link></h1>
               <p>{post.body}</p>
               <p>
                 <span className="badge">{post.voteScore}</span>
                 &nbsp;
-                <Link to={`/post/${post.id}`}>View</Link>
+                by <strong>{post.author}</strong>
               </p>
               <hr />
             </div>
@@ -42,10 +45,11 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps({categories, posts}, ownProps) {
+function mapStateToProps({categories, posts, orderField}, ownProps) {
   return {
     categories,
     posts,
+    orderField,
     category: ownProps.match.params.category,
   }
 }

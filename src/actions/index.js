@@ -3,6 +3,7 @@ export const SET_POSTS = 'SET_POSTS';
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const UPDATE_ORDER_FIELD = 'UPDATE_ORDER_FIELD';
 
 export function setCategories(categories) {
   return {
@@ -36,5 +37,12 @@ export function deletePost(post) {
   return {
     type: DELETE_POST,
     post
+  }
+}
+
+export function updateOrderField(field) {
+  return {
+    type: UPDATE_ORDER_FIELD,
+    field
   }
 }

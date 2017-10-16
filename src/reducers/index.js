@@ -1,4 +1,4 @@
-import { SET_CATEGORIES, SET_POSTS, ADD_POST, UPDATE_POST, DELETE_POST } from "../actions/index";
+import { SET_CATEGORIES, SET_POSTS, ADD_POST, UPDATE_POST, DELETE_POST, UPDATE_ORDER_FIELD } from "../actions/index";
 import combineReducers from "redux/es/combineReducers";
 
 export function categories (categories = [], action) {
@@ -28,7 +28,17 @@ export function posts (posts = [], action) {
   }
 }
 
+export function orderField(field = 'voteScore', action) {
+  switch (action.type) {
+    case UPDATE_ORDER_FIELD:
+      return action.field;
+    default:
+      return field;
+  }
+}
+
 export default combineReducers({
   categories,
   posts,
+  orderField
 });
