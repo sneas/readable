@@ -26,9 +26,13 @@ class PostList extends Component {
         <div className="col-xs-9">
           {posts.map(post => (
             <div key={post.id}>
-              <p className="lead">{post.title}</p>
+              <h1>{post.title}</h1>
               <p>{post.body}</p>
-              <p><Link to={`/post/${post.id}`}>View</Link></p>
+              <p>
+                <span className="badge">{post.voteScore}</span>
+                &nbsp;
+                <Link to={`/post/${post.id}`}>View</Link>
+              </p>
               <hr />
             </div>
           ))}

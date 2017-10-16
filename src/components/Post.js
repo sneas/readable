@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { api } from "../utils/api";
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { deletePost } from "../actions/index";
+import { deletePost, updatePost } from "../actions/index";
 
 class Post extends Component {
   state = {
@@ -26,16 +26,38 @@ class Post extends Component {
     })
   }
 
+  vote(event, weight) {
+    event.preventDefault();
+    api.voteForPost(this.state.post.id, weight).then((post) => {
+      this.setState({post});
+      this.props.dispatch(updatePost(post));
+    });
+  }
+
   render() {
     const post = this.state.post;
     return (
       <div>
         <h1>{post.title}</h1>
         <p>{post.body}</p>
-        <p>
-          <Link to={`/edit/post/${post.id}`}>Edit</Link>
-          <button className="btn-link" onClick={e => this.delete(e)}>Delete</button>
-        </p>
+        <div className="row">
+          <div className="col-xs-6">
+            <span className="badge">{post.voteScore}</span>
+            <button className="btn-link" onClick={event => this.vote(event, 'upVote')}><i className="glyphicon glyphicon-thumbs-up" /></button>
+            <button className="btn-link" onClick={event => this.vote(event, 'downVote')}><i className="glyphicon glyphicon-thumbs-down" /></button>
+          </div>
+          <div className="col-xs-6 text-right">
+            <Link to={`/edit/post/${post.id}`}>
+              <i className="glyphicon glyphicon-edit" />
+              Edit
+            </Link>
+            &nbsp;
+            <button className="btn-link" onClick={e => this.delete(e)}>
+              <i className="glyphicon glyphicon-remove" />
+              Delete
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

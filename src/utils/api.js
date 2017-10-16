@@ -52,4 +52,15 @@ export const api = {
         method: 'DELETE',
         headers,
       }).then(res => res.json()),
+
+  voteForPost: (postId, weight) =>
+    fetch(`${endpoint}/posts/${postId}`,
+      {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({option: weight})
+      }).then(res => res.json()),
 }
