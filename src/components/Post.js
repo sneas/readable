@@ -21,6 +21,10 @@ class Post extends Component {
 
   delete(event) {
     event.preventDefault();
+    if (!window.confirm('Are you sure')) {
+      return;
+    }
+
     api.deletePost(this.state.post.id).then(() => {
       this.props.dispatch(deletePost(this.state.post));
       this.props.history.replace(`/category/${this.state.post.category}`);
