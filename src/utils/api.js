@@ -63,4 +63,19 @@ export const api = {
         },
         body: JSON.stringify({option: weight})
       }).then(res => res.json()),
+
+  getAllComments: (postId) =>
+    fetch(`${endpoint}/posts/${postId}/comments`, { headers })
+      .then(res => res.json()),
+
+  createComment: (comment) =>
+    fetch(`${endpoint}/comments`,
+      {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+      }).then(res => res.json()),
 }

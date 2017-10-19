@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
-import { updatePost } from "../actions/index";
 
 class PostSummary extends Component {
   static propTypes = {

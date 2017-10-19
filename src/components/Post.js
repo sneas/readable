@@ -5,15 +5,18 @@ import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { deletePost, updatePost } from "../actions/index";
 import PostSummary from './PostSummary';
+import PostComments from './PostComments';
 
 class Post extends Component {
   state = {
+    isLoaded: false,
     post: {}
   }
 
   componentDidMount() {
     api.fetchPost(this.props.match.params.id).then((post) => {
       this.setState({
+        isLoaded: true,
         post
       });
     })
@@ -37,22 +40,29 @@ class Post extends Component {
   }
 
   render() {
+    if (!this.state.isLoaded) {
+      return '';
+    }
+
     const post = this.state.post;
     return (
       <div>
         <h1>{post.title}</h1>
+        <p>
+          <Link to={`/edit/post/${post.id}`}>
+            <i className="glyphicon glyphicon-edit" />
+            Edit
+          </Link>
+          &nbsp;
+          <button className="btn-link" onClick={e => this.delete(e)}>
+            <i className="glyphicon glyphicon-remove" />
+            Delete
+          </button>
+        </p>
         <p>{post.body}</p>
         <PostSummary post={post} allowVoting={true} onVote={(post) => this.onPostUpdate(post)} />
         <hr />
-        <Link to={`/edit/post/${post.id}`}>
-          <i className="glyphicon glyphicon-edit" />
-          Edit
-        </Link>
-        &nbsp;
-        <button className="btn-link" onClick={e => this.delete(e)}>
-          <i className="glyphicon glyphicon-remove" />
-          Delete
-        </button>
+        <PostComments post={post} />
       </div>
     );
   }

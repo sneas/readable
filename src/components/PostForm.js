@@ -27,7 +27,10 @@ class PostForm extends Component {
 
   handleChange(field, value) {
     this.setState({
-      post: Object.assign({}, this.state.post, { [field]: value })
+      post: {
+        ...this.state.post,
+        [field]: value,
+      }
     });
   }
 
