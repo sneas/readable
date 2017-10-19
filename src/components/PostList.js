@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link, withRouter } from 'react-router-dom'
 import ListSort from './ListSort';
+import PostSummary from './PostSummary';
 
 class PostList extends Component {
   render() {
@@ -31,11 +32,7 @@ class PostList extends Component {
             <div key={post.id}>
               <h1><Link to={`/post/${post.id}`}>{post.title}</Link></h1>
               <p>{post.body}</p>
-              <p>
-                <span className="badge">{post.voteScore}</span>
-                &nbsp;
-                by <strong>{post.author}</strong>
-              </p>
+              <PostSummary post={post}></PostSummary>
               <hr />
             </div>
           ))}
