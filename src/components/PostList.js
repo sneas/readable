@@ -32,7 +32,7 @@ class PostList extends Component {
             <div key={post.id}>
               <h1><Link to={`/post/${post.id}`}>{post.title}</Link></h1>
               <p>{post.body}</p>
-              <PostSummary post={post}></PostSummary>
+              <PostSummary id={post.id}></PostSummary>
               <hr />
             </div>
           ))}

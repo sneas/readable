@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { api } from "../utils/api";
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import * as uuid from "uuid";
 import { updatePost, addPost } from "../actions/index";
 
@@ -116,6 +116,12 @@ class PostForm extends Component {
             onChange={(event) => this.handleChange('body', event.target.value)}
           />
         </div>
+        {this.state.post.id ? (
+            <span>
+              <Link to={`/post/${this.state.post.id}`} className="btn btn-default"><i className="glyphicon glyphicon-chevron-left" /> Back to post</Link>
+              &nbsp;
+            </span>
+          ) : ''}
         <input type="submit" className="btn btn-primary" value="Submit" />
       </form>
     );

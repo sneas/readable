@@ -3,25 +3,12 @@ import { connect } from "react-redux";
 import { api } from "../utils/api";
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { deletePost, updatePost } from "../actions/index";
+import { deletePost } from "../actions/index";
 import PostSummary from './PostSummary';
 import PostComments from './PostComments';
+import { findPost } from "../utils/find-post";
 
 class Post extends Component {
-  state = {
-    isLoaded: false,
-    post: {}
-  }
-
-  componentDidMount() {
-    api.fetchPost(this.props.match.params.id).then((post) => {
-      this.setState({
-        isLoaded: true,
-        post
-      });
-    })
-  }
-
   delete(event) {
     event.preventDefault();
     if (!window.confirm('Are you sure')) {
@@ -34,17 +21,12 @@ class Post extends Component {
     })
   }
 
-  onPostUpdate(post) {
-    this.setState({post});
-    this.props.dispatch(updatePost(post));
-  }
-
   render() {
-    if (!this.state.isLoaded) {
+    if (!this.props.post) {
       return '';
     }
 
-    const post = this.state.post;
+    const post = this.props.post;
     return (
       <div>
         <h1>{post.title}</h1>
@@ -60,12 +42,18 @@ class Post extends Component {
           </button>
         </p>
         <p>{post.body}</p>
-        <PostSummary post={post} allowVoting={true} onVote={(post) => this.onPostUpdate(post)} />
+        <PostSummary id={post.id} allowVoting={true} />
         <hr />
-        <PostComments post={post} />
+        <PostComments id={post.id} />
       </div>
     );
   }
 }
 
-export default withRouter(connect()(Post));
+function mapStateToProps({posts}, ownProps) {
+  return {
+    post: findPost(posts, ownProps.match.params.id)
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(Post));

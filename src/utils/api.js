@@ -46,8 +46,8 @@ export const api = {
         body: JSON.stringify(post)
       }).then(res => res.json()),
 
-  deletePost: (postId) =>
-    fetch(`${endpoint}/posts/${postId}`,
+  deletePost: (id) =>
+    fetch(`${endpoint}/posts/${id}`,
       {
         method: 'DELETE',
         headers,
@@ -77,5 +77,12 @@ export const api = {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(comment)
+      }).then(res => res.json()),
+
+  deleteComment: (id) =>
+    fetch(`${endpoint}/comments/${id}`,
+      {
+        method: 'DELETE',
+        headers,
       }).then(res => res.json()),
 }

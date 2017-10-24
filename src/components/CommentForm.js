@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
 import * as uuid from "uuid";
+import { findPost } from "../utils/find-post";
+import { addComment } from "../actions/index";
 
 class CommentForm extends Component {
   static propTypes = {
-    post: PropTypes.object.isRequired,
-    onComment: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
   }
 
   state = {
@@ -40,7 +41,7 @@ class CommentForm extends Component {
     };
 
     api.createComment(comment).then(comment => {
-      this.props.onComment(comment);
+      this.props.dispatch(addComment(this.props.post.id, comment));
       this.setState({
         comment: {
           author: '',
@@ -89,4 +90,6 @@ class CommentForm extends Component {
   }
 }
 
-export default connect()(CommentForm);
+export default connect(({posts}, ownProps) => ({
+  post: findPost(posts, ownProps.id)
+}))(CommentForm);

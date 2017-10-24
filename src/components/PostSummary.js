@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
+import { updatePost } from "../actions/index";
+import { findPost } from "../utils/find-post";
 
 class PostSummary extends Component {
   static propTypes = {
-    post: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
     allowVoting: PropTypes.bool,
     onVote: PropTypes.func,
   }
@@ -13,7 +15,7 @@ class PostSummary extends Component {
   vote(event, weight) {
     event.preventDefault();
     api.voteForPost(this.props.post.id, weight).then((post) => {
-      this.props.onVote(post);
+      this.props.dispatch(updatePost(post));
     });
   }
 
@@ -45,4 +47,6 @@ class PostSummary extends Component {
   }
 }
 
-export default connect()(PostSummary);
+export default connect(({posts}, ownProps) => ({
+  post: findPost(posts, ownProps.id)
+}))(PostSummary);
