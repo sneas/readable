@@ -1,5 +1,5 @@
 import { SET_CATEGORIES, SET_POSTS, ADD_POST, UPDATE_POST, DELETE_POST, UPDATE_ORDER_FIELD, SET_COMMENTS, ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT, UPDATE_COMMENT
 } from "../actions/index";
 import combineReducers from "redux/es/combineReducers";
 
@@ -35,6 +35,11 @@ export function posts (posts = [], action) {
     case DELETE_COMMENT:
       return posts.map(post => post.id === action.postId
         ? {...post, comments: post.comments.filter(comment => comment.id !== action.commentId)}
+        : post
+      );
+    case UPDATE_COMMENT:
+      return posts.map(post => post.id === action.postId
+        ? {...post, comments: post.comments.map(comment => comment.id === action.comment.id ? action.comment : comment)}
         : post
       );
     default:

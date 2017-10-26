@@ -12,7 +12,8 @@ class PostComments extends Component {
   }
 
   state = {
-    isLoaded: false
+    isLoaded: false,
+    editId: null,
   }
 
   componentDidMount() {
@@ -54,17 +55,35 @@ class PostComments extends Component {
       <div>
         {this.props.post.comments.map(comment => (
           <div key={comment.id}>
-            <p>From <strong>{comment.author}</strong></p>
-            <p>{comment.body}</p>
-            <div>
-              <button className="btn-link" onClick={() => this.deleteComment(comment.id)}>
-                <i className="glyphicon glyphicon-remove" />Delete
-              </button>
-            </div>
+            {
+              this.state.editId === comment.id
+              ? (
+                <CommentForm id={post.id} commentId={comment.id} onExit={() => this.setState({editId: null})} />
+              ) : (
+                <div>
+                  <p>From <strong>{comment.author}</strong></p>
+                  <p>{comment.body}</p>
+                  <div>
+                    <button className="btn-link" onClick={() => this.setState({editId: comment.id})}>
+                      <i className="glyphicon glyphicon-edit" />Edit
+                    </button>
+                    <button className="btn-link" onClick={() => this.deleteComment(comment.id)}>
+                      <i className="glyphicon glyphicon-remove" />Delete
+                    </button>
+                  </div>
+                </div>
+              )
+            }
             <hr />
           </div>
         ))}
-        <CommentForm id={post.id}  />
+
+        {
+          this.state.editId ? ''
+            : (
+              <CommentForm id={post.id}  />
+            )
+        }
       </div>
     )
   }

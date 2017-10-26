@@ -7,6 +7,7 @@ export const UPDATE_ORDER_FIELD = 'UPDATE_ORDER_FIELD';
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 
 export function setCategories(categories) {
   return {
@@ -71,5 +72,13 @@ export function deleteComment(postId, commentId) {
     postId,
     commentId,
     type: DELETE_COMMENT,
+  }
+}
+
+export function updateComment(postId, comment) {
+  return {
+    postId,
+    comment,
+    type: UPDATE_COMMENT,
   }
 }

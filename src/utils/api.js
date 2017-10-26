@@ -85,4 +85,15 @@ export const api = {
         method: 'DELETE',
         headers,
       }).then(res => res.json()),
+
+  updateComment: (comment) =>
+    fetch(`${endpoint}/comments/${comment.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+      }).then(res => res.json()),
 }
