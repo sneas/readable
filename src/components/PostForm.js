@@ -11,7 +11,7 @@ class PostForm extends Component {
     post: {
       title: '',
       body: '',
-      category: '',
+      category: this.props.preselectedCategory || '',
       author: '',
     }
   }
@@ -57,7 +57,6 @@ class PostForm extends Component {
   createPost() {
     const post = {
       ...this.state.post,
-      author: 'Dima',
       id: uuid(),
       timestamp: Date.now(),
     };
@@ -144,6 +143,7 @@ function mapStateToProps({categories}, ownProps) {
   return {
     categories,
     id: ownProps.match.params.id,
+    preselectedCategory: ownProps.match.params.category
   }
 }
 

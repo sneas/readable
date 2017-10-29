@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom'
-import Category from './PostList';
+import PostList from './PostList';
 import { connect } from "react-redux";
 import { setCategories, setPosts } from "../actions/index";
 import PostForm from "./PostForm";
@@ -8,6 +8,10 @@ import Post from "./Post";
 import { api } from "../utils/api";
 
 class App extends Component {
+  state = {
+    postsLoaded: false
+  };
+
   componentDidMount() {
     api.fetchCategories().then(categories => {
       this.props.dispatch(setCategories(categories));
@@ -15,10 +19,15 @@ class App extends Component {
 
     api.fetchPosts().then(posts => {
       this.props.dispatch(setPosts(posts));
+      this.setState({postsLoaded: true});
     });
   }
 
   render() {
+    if (!this.state.postsLoaded) {
+      return '';
+    }
+
     return (
       <div>
         <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -34,9 +43,9 @@ class App extends Component {
           </div>
         </nav>
         <div className="container">
-          <Route exact path='/' component={Category} />
-          <Route exact path='/category/:category' component={Category} />
-          <Route exact path='/add/post' component={PostForm} />
+          <Route exact path='/' component={PostList} />
+          <Route exact path='/category/:category' component={PostList} />
+          <Route exact path='/add/post/:category?' component={PostForm} />
           <Route exact path='/edit/post/:id' component={PostForm} />
           <Route exact path='/post/:id' component={Post} />
         </div>

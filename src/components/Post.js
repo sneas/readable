@@ -15,9 +15,9 @@ class Post extends Component {
       return;
     }
 
-    api.deletePost(this.state.post.id).then(() => {
-      this.props.dispatch(deletePost(this.state.post));
-      this.props.history.replace(`/category/${this.state.post.category}`);
+    api.deletePost(this.props.post.id).then((post) => {
+      this.props.dispatch(deletePost(post));
+      this.props.history.replace(`/category/${post.category}`);
     })
   }
 
