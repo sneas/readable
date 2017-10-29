@@ -59,25 +59,22 @@ export function setComments(postId, comments = []) {
   }
 }
 
-export function addComment(postId, comment) {
+export function addComment(comment) {
   return {
-    postId,
     comment,
     type: ADD_COMMENT,
   }
 }
 
-export function deleteComment(postId, commentId) {
+export function deleteComment(id) {
   return {
-    postId,
-    commentId,
+    id,
     type: DELETE_COMMENT,
   }
 }
 
-export function updateComment(postId, comment) {
+export function updateComment(comment) {
   return {
-    postId,
     comment,
     type: UPDATE_COMMENT,
   }

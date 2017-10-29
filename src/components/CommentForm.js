@@ -38,7 +38,7 @@ class CommentForm extends Component {
 
   updateComment() {
     api.updateComment(this.state.comment).then(comment => {
-      this.props.dispatch(updateComment(this.props.post.id, comment));
+      this.props.dispatch(updateComment(comment));
 
       if (this.props.onExit) {
         this.props.onExit();
@@ -55,7 +55,7 @@ class CommentForm extends Component {
     };
 
     api.createComment(comment).then(comment => {
-      this.props.dispatch(addComment(this.props.post.id, comment));
+      this.props.dispatch(addComment(comment));
       this.setState({
         comment: {
           author: '',
@@ -108,7 +108,7 @@ class CommentForm extends Component {
   }
 }
 
-export default connect(({posts}, ownProps) => ({
+export default connect(({posts, comments}, ownProps) => ({
   post: findPost(posts, ownProps.id),
-  comment: findPost(posts, ownProps.id).comments.find(comment => comment.id === ownProps.commentId),
+  comment: comments.find(comment => comment.id === ownProps.commentId),
 }))(CommentForm);

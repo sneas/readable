@@ -31,14 +31,14 @@ class PostComments extends Component {
     }
 
     api.deleteComment(id).then(() => {
-      this.props.dispatch(deleteComment(this.props.post.id, id));
+      this.props.dispatch(deleteComment(id));
     })
   }
 
   vote(event, commentId, option) {
     event.preventDefault();
     api.voteForComment(commentId, option).then((comment) => {
-      this.props.dispatch(updateComment(this.props.id, comment));
+      this.props.dispatch(updateComment(comment));
     });
   }
 
@@ -49,7 +49,7 @@ class PostComments extends Component {
       return '';
     }
 
-    if (!this.props.post.comments) {
+    if (this.props.comments.length === 0) {
       return (
         <div>
           <p className="text-muted">No comments yet. Be the first one to comment.</p>
@@ -60,7 +60,7 @@ class PostComments extends Component {
 
     return (
       <div>
-        {this.props.post.comments.map(comment => (
+        {this.props.comments.map(comment => (
           <div key={comment.id}>
             {
               this.state.editId === comment.id
@@ -99,6 +99,7 @@ class PostComments extends Component {
   }
 }
 
-export default connect(({posts}, ownProps) => ({
-  post: findPost(posts, ownProps.id)
+export default connect(({posts, comments}, ownProps) => ({
+  post: findPost(posts, ownProps.id),
+  comments: comments.filter(comment => comment.parentId === ownProps.id),
 }))(PostComments);

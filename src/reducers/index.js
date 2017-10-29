@@ -25,25 +25,25 @@ export function posts (posts = [], action) {
       return posts.map(post => post.id === action.post.id ? {...post, ...action.post} : post);
     case DELETE_POST:
       return posts.filter(post => post.id !== action.post.id);
-    case SET_COMMENTS:
-      return posts.map(post => post.id === action.postId ? {...post, comments: action.comments} : post);
-    case ADD_COMMENT:
-      return posts.map(post => post.id === action.postId
-        ? {...post, comments: [...post.comments, action.comment]}
-        : post
-      );
-    case DELETE_COMMENT:
-      return posts.map(post => post.id === action.postId
-        ? {...post, comments: post.comments.filter(comment => comment.id !== action.commentId)}
-        : post
-      );
-    case UPDATE_COMMENT:
-      return posts.map(post => post.id === action.postId
-        ? {...post, comments: post.comments.map(comment => comment.id === action.comment.id ? action.comment : comment)}
-        : post
-      );
     default:
       return posts;
+  }
+}
+
+export function comments(comments = [], action) {
+  switch (action.type) {
+    case SET_COMMENTS:
+      return [...action.comments, ...comments.filter(comment => action.postId !== comment.parentId)];
+    case ADD_COMMENT:
+      return [...comments, action.comment];
+    case DELETE_COMMENT:
+      return comments.filter(comment => comment.id !== action.id);
+    case UPDATE_COMMENT:
+      return comments.map(comment => comment.id === action.comment.id ? action.comment : comment);
+    case DELETE_POST:
+      return comments.filter(comment => comment.parentId !== action.post.id);
+    default:
+      return comments;
   }
 }
 
@@ -59,5 +59,6 @@ export function orderField(field = 'voteScore', action) {
 export default combineReducers({
   categories,
   posts,
+  comments,
   orderField
 });
