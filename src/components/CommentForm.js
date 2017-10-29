@@ -87,6 +87,7 @@ class CommentForm extends Component {
             placeholder="Your name"
             value={comment.author}
             onChange={(event) => this.handleChange('author', event.target.value)}
+            required
           />
         </div>
         <div className="form-group">
@@ -96,6 +97,7 @@ class CommentForm extends Component {
             placeholder="Your comment"
             value={comment.body}
             onChange={(event) => this.handleChange('body', event.target.value)}
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">Submit</button> {
