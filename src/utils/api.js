@@ -53,7 +53,7 @@ export const api = {
         headers,
       }).then(res => res.json()),
 
-  voteForPost: (postId, weight) =>
+  voteForPost: (postId, option) =>
     fetch(`${endpoint}/posts/${postId}`,
       {
         method: 'POST',
@@ -61,7 +61,7 @@ export const api = {
           ...headers,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({option: weight})
+        body: JSON.stringify({option: option})
       }).then(res => res.json()),
 
   getAllComments: (postId) =>
@@ -95,5 +95,16 @@ export const api = {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(comment)
+      }).then(res => res.json()),
+
+  voteForComment: (commentId, option) =>
+    fetch(`${endpoint}/comments/${commentId}`,
+      {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({option: option})
       }).then(res => res.json()),
 }

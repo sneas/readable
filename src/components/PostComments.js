@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { api } from "../utils/api";
 import CommentForm from './CommentForm';
 import { findPost } from "../utils/find-post";
-import { setComments, deleteComment } from "../actions/index";
+import { setComments, deleteComment, updateComment } from "../actions/index";
 
 class PostComments extends Component {
   static propTypes = {
@@ -33,6 +33,13 @@ class PostComments extends Component {
     api.deleteComment(id).then(() => {
       this.props.dispatch(deleteComment(this.props.post.id, id));
     })
+  }
+
+  vote(event, commentId, option) {
+    event.preventDefault();
+    api.voteForComment(commentId, option).then((comment) => {
+      this.props.dispatch(updateComment(this.props.id, comment));
+    });
   }
 
   render() {
@@ -64,6 +71,9 @@ class PostComments extends Component {
                   <p>From <strong>{comment.author}</strong></p>
                   <p>{comment.body}</p>
                   <div>
+                    <span className="label label-info">{comment.voteScore}</span>
+                    <button className="btn-link" onClick={event => this.vote(event, comment.id, 'upVote')}><i className="glyphicon glyphicon-thumbs-up" /></button>
+                    <button className="btn-link" onClick={event => this.vote(event, comment.id, 'downVote')}><i className="glyphicon glyphicon-thumbs-down" /></button>
                     <button className="btn-link" onClick={() => this.setState({editId: comment.id})}>
                       <i className="glyphicon glyphicon-edit" />Edit
                     </button>

@@ -12,9 +12,9 @@ class PostSummary extends Component {
     onVote: PropTypes.func,
   }
 
-  vote(event, weight) {
+  vote(event, option) {
     event.preventDefault();
-    api.voteForPost(this.props.post.id, weight).then((post) => {
+    api.voteForPost(this.props.post.id, option).then((post) => {
       this.props.dispatch(updatePost(post));
     });
   }
