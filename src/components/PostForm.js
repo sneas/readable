@@ -12,6 +12,7 @@ class PostForm extends Component {
       title: '',
       body: '',
       category: '',
+      author: '',
     }
   }
 
@@ -79,7 +80,7 @@ class PostForm extends Component {
             </div>
           ) : ''
         }
-        <h1>{this.state.post.id ? 'Edit post' : 'Write post'}</h1>
+        <h1>{this.props.id ? 'Edit post' : 'Write post'}</h1>
         <div className="form-group">
           <label htmlFor="category">Category</label>
           <select
@@ -116,7 +117,18 @@ class PostForm extends Component {
             onChange={(event) => this.handleChange('body', event.target.value)}
           />
         </div>
-        {this.state.post.id ? (
+        <div className="form-group">
+          <label htmlFor="author">Author</label>
+          <input
+            type="text"
+            className="form-control"
+            id="author"
+            placeholder="Author"
+            value={post.author}
+            required
+            onChange={(event) => this.handleChange('author', event.target.value)} />
+        </div>
+        {this.props.id ? (
             <span>
               <Link to={`/post/${this.state.post.id}`} className="btn btn-default"><i className="glyphicon glyphicon-chevron-left" /> Back to post</Link>
               &nbsp;
