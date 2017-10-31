@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import PostSummary from './PostSummary';
 import PostComments from './PostComments';
 import { findPost } from "../utils/find-post";
+import PageNotFound from './PageNotFound';
 
 class Post extends Component {
   onDelete(post) {
@@ -12,7 +13,7 @@ class Post extends Component {
 
   render() {
     if (!this.props.post) {
-      return '';
+      return <PageNotFound />;
     }
 
     const post = this.props.post;
