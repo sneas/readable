@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
-import { updatePost, deletePost } from "../actions/index";
+import { updatePost, deletePost } from "../actions/posts";
 import { findPost } from "../utils/find-post";
 import { Link } from 'react-router-dom'
 

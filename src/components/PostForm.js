@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { api } from "../utils/api";
 import { Link, withRouter } from 'react-router-dom'
 import * as uuid from "uuid";
-import { updatePost, addPost } from "../actions/index";
+import { updatePost, addPost } from "../actions/posts";
 
 class PostForm extends Component {
   state = {

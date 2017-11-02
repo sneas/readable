@@ -1,11 +1,13 @@
-import { SET_CATEGORIES, SET_POSTS, ADD_POST, UPDATE_POST, DELETE_POST, UPDATE_ORDER_FIELD, SET_COMMENTS, ADD_COMMENT,
+import { UPDATE_ORDER_FIELD, SET_COMMENTS, ADD_COMMENT,
   DELETE_COMMENT, UPDATE_COMMENT
 } from "../actions/index";
+import { RECEIVE_POSTS, ADD_POST, UPDATE_POST, DELETE_POST } from "../actions/posts";
 import combineReducers from "redux/es/combineReducers";
+import { RECEIVE_CATEGORIES } from "../actions/categories";
 
 export function categories (categories = [], action) {
   switch (action.type) {
-    case SET_CATEGORIES:
+    case RECEIVE_CATEGORIES:
       return action.categories;
     default:
       return categories;
@@ -14,7 +16,7 @@ export function categories (categories = [], action) {
 
 export function posts (posts = [], action) {
   switch (action.type) {
-    case SET_POSTS:
+    case RECEIVE_POSTS:
       return action.posts;
     case ADD_POST:
       return [
@@ -56,9 +58,27 @@ export function orderField(field = 'voteScore', action) {
   }
 }
 
+export function dataLoaded(isLoaded = {categories: false, posts: false}, action) {
+  switch (action.type) {
+    case RECEIVE_CATEGORIES:
+      return {
+        ...isLoaded,
+        categories: true,
+      };
+    case RECEIVE_POSTS:
+      return {
+        ...isLoaded,
+        posts: true,
+      };
+    default:
+      return isLoaded;
+  }
+}
+
 export default combineReducers({
   categories,
   posts,
   comments,
-  orderField
+  orderField,
+  dataLoaded,
 });
