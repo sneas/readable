@@ -1,3 +1,4 @@
+import { normalize } from "./normalize";
 const endpoint = "http://localhost:3001"
 
 // Generate a unique token for storing your bookshelf data on the backend server.
@@ -18,7 +19,8 @@ export const api = {
 
   fetchPosts: () =>
     fetch(`${endpoint}/posts`, { headers })
-      .then(res => res.json()),
+      .then(res => res.json())
+      .then(posts => normalize(posts)),
 
   fetchPost: (postId) =>
     fetch(`${endpoint}/posts/${postId}`, { headers })

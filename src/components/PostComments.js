@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
 import CommentForm from './CommentForm';
-import { findPost } from "../utils/find-post";
 import { setComments, deleteComment, updateComment } from "../actions/index";
 
 class PostComments extends Component {
@@ -100,6 +99,6 @@ class PostComments extends Component {
 }
 
 export default connect(({posts, comments}, ownProps) => ({
-  post: findPost(posts, ownProps.id),
+  post: posts[ownProps.id],
   comments: comments.filter(comment => comment.parentId === ownProps.id),
 }))(PostComments);

@@ -14,19 +14,23 @@ export function categories (categories = [], action) {
   }
 }
 
-export function posts (posts = [], action) {
+export function posts (posts = {}, action) {
   switch (action.type) {
     case RECEIVE_POSTS:
       return action.posts;
     case ADD_POST:
-      return [
+      return {
         ...posts,
-        action.post
-      ];
+        [action.post.id]: action.post
+      };
     case UPDATE_POST:
-      return posts.map(post => post.id === action.post.id ? {...post, ...action.post} : post);
+      return {
+        ...posts,
+        [action.post.id]: action.post
+      };
     case DELETE_POST:
-      return posts.filter(post => post.id !== action.post.id);
+      let { [action.post.id]: deletedItem, ...rest } = posts;
+      return rest;
     default:
       return posts;
   }

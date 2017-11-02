@@ -60,7 +60,7 @@ function mapStateToProps({categories, posts, orderField}, ownProps) {
   return {
     categories,
     orderField,
-    posts: categoryPath ? posts.filter(post => post.category === categoryPath) : posts,
+    posts: categoryPath ? Object.values(posts).filter(post => post.category === categoryPath) : Object.values(posts),
     category: categories.find(category => category.path === categoryPath),
   }
 }

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
 import { updatePost, deletePost } from "../actions/posts";
-import { findPost } from "../utils/find-post";
 import { Link } from 'react-router-dom'
 
 class PostSummary extends Component {
@@ -67,5 +66,5 @@ class PostSummary extends Component {
 }
 
 export default connect(({posts}, ownProps) => ({
-  post: findPost(posts, ownProps.id)
+  post: posts[ownProps.id]
 }))(PostSummary);

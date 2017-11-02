@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom'
 import PostSummary from './PostSummary';
 import PostComments from './PostComments';
-import { findPost } from "../utils/find-post";
 import PageNotFound from './PageNotFound';
 
 class Post extends Component {
@@ -31,7 +30,7 @@ class Post extends Component {
 
 function mapStateToProps({posts}, ownProps) {
   return {
-    post: findPost(posts, ownProps.match.params.id)
+    post: posts[ownProps.match.params.id]
   }
 }
 

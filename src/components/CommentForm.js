@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { api } from "../utils/api";
 import * as uuid from "uuid";
-import { findPost } from "../utils/find-post";
 import { addComment, updateComment } from "../actions/index";
 
 class CommentForm extends Component {
@@ -111,6 +110,6 @@ class CommentForm extends Component {
 }
 
 export default connect(({posts, comments}, ownProps) => ({
-  post: findPost(posts, ownProps.id),
+  post: posts[ownProps.id],
   comment: comments.find(comment => comment.id === ownProps.commentId),
 }))(CommentForm);
